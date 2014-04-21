@@ -44,7 +44,7 @@ body {
 }
 
 body#example {
-  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:"Droid Arabic Kufi", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif */;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
   background: #FCFCFC url(../images/bg.jpg) repeat;
   margin: 0px;
   padding: 0px;
@@ -60,7 +60,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:"Droid Arabic Kufi", "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif */;;
+  font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif/*rtl:prepend:"Droid Arabic Kufi","Droid Sans", */;
 }
 
 /*
@@ -608,7 +608,7 @@ body.guide .main.container > * {
   margin: 0em;
   padding: 0.5em !important;
 }
-#example .position.example .segment {
+#example .position.example > .segment {
   width: 250px;
   height: 250px;
 }
@@ -714,6 +714,7 @@ body.guide .main.container > * {
   transition:
     all 0.2s ease-out
   ;
+  -webkit-backface-visibility: hidden;
 }
 #example .icon.example .grid .column:hover .icon {
   color: #009FDA;

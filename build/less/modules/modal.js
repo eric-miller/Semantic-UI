@@ -1,6 +1,6 @@
 /*
  * # Semantic - Modal
- * http://github.com/jlukic/semantic-ui/
+ * http://github.com/semantic-org/semantic-ui/
  *
  *
  * Copyright 2013 Contributors
@@ -24,6 +24,12 @@ $.fn.modal = function(parameters) {
     query           = arguments[0],
     methodInvoked   = (typeof query == 'string'),
     queryArguments  = [].slice.call(arguments, 1),
+
+    requestAnimationFrame = window.requestAnimationFrame
+      || window.mozRequestAnimationFrame
+      || window.webkitRequestAnimationFrame
+      || window.msRequestAnimationFrame
+      || function(callback) { setTimeout(callback, 0); },
 
     returnedValue
   ;
@@ -65,15 +71,15 @@ $.fn.modal = function(parameters) {
         initialize: function() {
           module.verbose('Initializing dimmer', $context);
 
-          if(typeof $.fn.dimmer === undefined) {
+          if($.fn.dimmer === undefined) {
             module.error(error.dimmer);
             return;
           }
           $dimmable = $context
             .dimmer({
               closable : false,
-              useCSS   : true,
-              duration: {
+              useCSS   : false,
+              duration : {
                 show     : settings.duration * 0.9,
                 hide     : settings.duration * 1.1
               }
@@ -96,9 +102,7 @@ $.fn.modal = function(parameters) {
             .on('click' + eventNamespace, module.event.close)
           ;
           $window
-            .on('resize' + eventNamespace, function() {
-              module.event.debounce(module.refresh, 50);
-            })
+            .on('resize' + eventNamespace, module.event.resize)
           ;
           module.instantiate();
         },
@@ -210,7 +214,7 @@ $.fn.modal = function(parameters) {
           },
           resize: function() {
             if( $dimmable.dimmer('is active') ) {
-              module.refresh();
+              requestAnimationFrame(module.refresh);
             }
           }
         },
@@ -249,10 +253,12 @@ $.fn.modal = function(parameters) {
               module.hideOthers(module.showModal);
             }
             else {
+              $.proxy(settings.onShow, element)();
               if(settings.transition && $.fn.transition !== undefined && $module.transition('is supported')) {
                 module.debug('Showing modal with css animations');
                 $module
                   .transition(settings.transition + ' in', settings.duration, function() {
+                    $.proxy(settings.onVisible, element)();
                     module.set.active();
                     callback();
                   })
@@ -262,12 +268,12 @@ $.fn.modal = function(parameters) {
                 module.debug('Showing modal with javascript');
                 $module
                   .fadeIn(settings.duration, settings.easing, function() {
+                    $.proxy(settings.onVisible, element)();
                     module.set.active();
                     callback();
                   })
                 ;
               }
-              $.proxy(settings.onShow, element)();
             }
           }
           else {
@@ -329,9 +335,11 @@ $.fn.modal = function(parameters) {
           }
           module.debug('Hiding modal');
           module.remove.keyboardShortcuts();
+          $.proxy(settings.onHide, element)();
           if(settings.transition && $.fn.transition !== undefined && $module.transition('is supported')) {
             $module
               .transition(settings.transition + ' out', settings.duration, function() {
+                $.proxy(settings.onHidden, element)();
                 module.remove.active();
                 module.restore.focus();
                 callback();
@@ -341,13 +349,13 @@ $.fn.modal = function(parameters) {
           else {
             $module
               .fadeOut(settings.duration, settings.easing, function() {
+                $.proxy(settings.onHidden, element)();
                 module.remove.active();
                 module.restore.focus();
                 callback();
               })
             ;
           }
-          $.proxy(settings.onHide, element)();
         },
 
         hideAll: function(callback) {
@@ -690,7 +698,7 @@ $.fn.modal.settings = {
   name          : 'Modal',
   namespace     : 'modal',
 
-  debug         : true,
+  debug         : false,
   verbose       : true,
   performance   : true,
 
@@ -708,6 +716,10 @@ $.fn.modal.settings = {
 
   onShow        : function(){},
   onHide        : function(){},
+
+  onVisible     : function(){},
+  onHidden      : function(){},
+
   onApprove     : function(){ return true; },
   onDeny        : function(){ return true; },
 

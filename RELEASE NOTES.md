@@ -1,6 +1,86 @@
 ## RELEASE NOTES
 
-### Version 0.13.1- Feb 28, 2014
+### Version 0.15.5 - April 11, 2014
+
+**Critical Fixes**
+- **Checkbox** - Fixes ``ui checkbox`` to obey ``disabled`` property of input
+
+**Fixes**
+- **Reveal** - Hidden content now can be selected on reveal
+- **Message** - Fixes hidden/visible class to work with animations
+- **Message** - Fixes hidden/visible class to set proper display on ``ui icon message``
+- **Message** - Fixes hitbox/position of ``close icon`` inside message
+
+### Version 0.15.4 - April 04, 2014
+
+**Fixes**
+- **Rating** - Fixes issue where rating was behaving erratically in Chrome
+
+### Version 0.15.3 - April 04, 2014
+
+**Changes**
+- **Transition** - CSS Transitions now work in legacy FF (FF > 12)
+- **All UI** - Adds support for legacy FF vendor prefixes (FF > 12)
+
+**Docs**
+- Adds more examples for static checkbox/radio boxes with HTML only
+- Fixes a variety of issues with malformed examples (thanks community)
+
+### Version 0.15.2 - Mar 28, 2014
+
+**Changes**
+- **All Modules** - Debug is now disabled by default
+
+**Fixes**
+- **Step** - Fixes issue with border radius on vertical steps
+- **Icon** - Orange color is now available for icon
+- **Menu** - Fixes formatting of attached segments with menus
+
+### Version 0.15.1 - Mar 14, 2014
+
+**Critical Fixes**
+- **Dropdown** - Typo in dropdown css was causing selection dropdowns not to appear
+
+### Version 0.15.0 - Mar 14, 2014
+
+**Enhancements**
+- **Step** - Vertical Steps now have option to have two line items
+- **Form** - Forms, Dropdowns, and Inputs now have matching padding size, and use 1em font size to appear same size as surrounding text
+- **Icon** - Icons on dark backgrounds should render better in OSX
+- **Modal** - Modals now have an onVisible and onHidden callback for after animation ends
+- **Form Validation** - Form validation now automatically revalidates a selection dropdown on change when invalid
+
+**Critical Fixes**
+- **Modal** - Browsers without RequestAnimationFrame (Opera) were erroring on modal show
+- **Dropdown** - Element's with numeric ``data-text`` values were erroring when selected
+
+**Fixes**
+- **Modal** - Modal onShow and onHide occurs before transition starts, allowing for class name changes not to be reset
+- **Dropdown** - Default selection text was not appearing when a dropdown had a value that was ``false`` or ``0``
+- **Input** - Fixes slight error in corner label rounding **Thanks MohammadYounes**
+- **Reveal** - Reveals will now show on active, for touch devices **Thanks Illyism**
+- **Table** - Fixes rounding on tables with multiple tfoot elements **Thanks webdesserts**
+- **Icon** - Hide and unhide icon were accidentally given opposite names
+- **Checkbox** - Checkboxes can now have multiple inputs inside, for use with .NET and other languages that insert their own hidden inputs
+
+**Project**
+- **iOS** - Active styles, for example pressed in buttons, now appear in docs on touch devices
+
+### Version 0.14.0 - Mar 03, 2014
+
+**Enhancements**
+- **Modal** - Modal now uses requestAnimationFrame instead of debounced callback
+- **Dropdown** - Dropdown now has error state **Thanks Musatov**
+- **Form** - Form fields with errors will now properly style dropdown elements **Thanks Musatov**
+- **Step** - Steps can now appear vertically
+
+**Fixes**
+- **List** - Bulleted and horizontal lists now appear correctly in IE10-11
+
+**Project**
+- **NPM** - Docpad is now moved to a dev dependency **Thanks kapouer**
+
+### Version 0.13.1 - Feb 28, 2014
 
 **Fixes**
 - **Modal** - Fixes modal positioning appearing slightly below center on second load
